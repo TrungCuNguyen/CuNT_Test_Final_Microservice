@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: api-gateway
+  # định nghĩa các bộ định tuyến điều hướng tới các service
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: student-service
+              uri: lb://student-service
+              predicates:
+                - Path=/api/students/**
+            - id: course-service
+              uri: lb://courses-service
+              predicates:
+                - Path=/api/courses/**
+server:
+  port: 8088
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    hostname: localhost
+#    prefer-ip-address: false
+#    instance-id: localhost:${server.port}
